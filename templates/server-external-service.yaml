@@ -1,0 +1,39 @@
+# From https://github.com/hashicorp/consul-helm/pull/27/files
+# This service can be used to provide connectivity with a consul cluster
+# running in another datacenter.Each consul-server should have an external
+# service that it will use to advertise on the WAN
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul-server-external
+  labels:
+    app: consul
+    chart: consul-helm
+  annotations:
+    # This must be set in addition to publishNotReadyAddresses due
+    # to an open issue where it may not work:
+    # https://github.com/kubernetes/kubernetes/issues/58662
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+    # See your cloud provider's documentation for the correct annotations
+    # needed for creating an external LoadBalancer.
+spec:
+  type: LoadBalancer
+  publishNotReadyAddresses: true
+  ports:
+    - name: http
+      port: 8500
+      targetPort: 8500
+    - name: serflan-tcp
+      protocol: "TCP"
+      port: 8301
+      targetPort: 8301
+    - name: serfwan-tcp
+      protocol: "TCP"
+      port: 8302
+      targetPort: 8302
+    - name: server
+      port: 8300
+      targetPort: 8300
+  selector:
+    app: consul
+    component: server
