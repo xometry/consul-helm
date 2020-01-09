@@ -98,6 +98,7 @@ spec:
 
               exec /bin/consul agent \
                 -advertise="${POD_IP}" \
+                -advertise-wan="{{ .Values.server.advertiseWan }}" \
                 -bind=0.0.0.0 \
                 -bootstrap-expect={{ .Values.server.bootstrapExpect }} \
                 -client=0.0.0.0 \
