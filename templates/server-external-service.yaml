@@ -17,7 +17,7 @@ metadata:
     # See your cloud provider's documentation for the correct annotations
     # needed for creating an external LoadBalancer.
 spec:
-  type: LoadBalancer
+  type: NodePort
   publishNotReadyAddresses: true
   ports:
     - name: http
