@@ -175,6 +175,13 @@ server:
     #   name: my-secret
     #   load: false # if true, will add to `-config-dir` to load by Consul
 
+  # Extra annotations to attach to the server service object
+  # Useful for External DNS annotations, for example. https://github.com/helm/charts/tree/master/stable/external-dns
+  # This should be a multi-line string mapping directly to the a map of
+  # the annotations to apply to the server pods
+  service:
+    annotations: null
+
   # Affinity Settings
   # Commenting out or setting as empty the affinity variable, will allow
   # deployment to single node services such as Minikube
